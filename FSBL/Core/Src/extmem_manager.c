@@ -14,7 +14,7 @@ void MX_EXTMEM_MANAGER_Init(void)
     EXTMEM_Init(EXTMEMORY_1, HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI2));
 
     /* PSRAM - XSPI1 */
-    // EXTMEM_DRIVER_PSRAM_Init is not implemented
+// EXTMEM_DRIVER_PSRAM_Init is not implemented
 //    extmem_list_config[EXTMEMORY_2].MemType    = EXTMEM_PSRAM;
 //    extmem_list_config[EXTMEMORY_2].Handle     = (void *)&hxspi1;
 //    extmem_list_config[EXTMEMORY_2].ConfigType = EXTMEM_LINK_CONFIG_16LINES;
