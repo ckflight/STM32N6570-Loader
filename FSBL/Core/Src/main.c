@@ -2,10 +2,13 @@
 #include "main.h"
 #include "extmem_manager.h"
 
+XSPI_HandleTypeDef hxspi1;
 XSPI_HandleTypeDef hxspi2;
 
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
+
+static void MX_XSPI1_Init(void);
 static void MX_XSPI2_Init(void);
 
 /*
@@ -35,6 +38,7 @@ int main(void)
 
   PeriphCommonClock_Config();
 
+  //MX_XSPI1_Init();
   MX_XSPI2_Init();
   MX_EXTMEM_MANAGER_Init();
 
@@ -217,6 +221,55 @@ void PeriphCommonClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+static void MX_XSPI1_Init(void)
+{
+    XSPIM_CfgTypeDef sXspiManagerCfg = {0};
+    uint32_t xspi_clk;
+
+    hxspi1.Instance = XSPI1;
+
+    hxspi1.Init.FifoThresholdByte       = 8;
+    hxspi1.Init.MemoryMode              = HAL_XSPI_SINGLE_MEM;
+    hxspi1.Init.MemoryType              = HAL_XSPI_MEMTYPE_APMEM_16BITS;
+    hxspi1.Init.MemorySize              = HAL_XSPI_SIZE_256MB;
+    hxspi1.Init.ChipSelectHighTimeCycle = 5;
+    hxspi1.Init.FreeRunningClock        = HAL_XSPI_FREERUNCLK_DISABLE;
+    hxspi1.Init.ClockMode               = HAL_XSPI_CLOCK_MODE_0;
+    hxspi1.Init.WrapSize                = HAL_XSPI_WRAP_NOT_SUPPORTED;
+    hxspi1.Init.ClockPrescaler          = 3;
+    hxspi1.Init.SampleShifting          = HAL_XSPI_SAMPLE_SHIFT_NONE;
+    hxspi1.Init.DelayHoldQuarterCycle   = HAL_XSPI_DHQC_ENABLE;
+    hxspi1.Init.ChipSelectBoundary      = HAL_XSPI_BONDARYOF_16KB;
+    hxspi1.Init.MaxTran                 = 0;
+
+    xspi_clk = HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI1);
+
+    hxspi1.Init.Refresh =
+        ((2U * (xspi_clk / hxspi1.Init.ClockPrescaler)) / 1000000U) - 4U;
+
+#if defined(OCTOSPI_DCR1_DLYBYP)
+    hxspi1.Init.DelayBlockBypass = HAL_XSPI_DELAY_BLOCK_BYPASS;
+#endif
+
+    hxspi1.Init.MemorySelect = HAL_XSPI_CSSEL_NCS1;
+
+    if (HAL_XSPI_Init(&hxspi1) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
+    sXspiManagerCfg.IOPort      = HAL_XSPIM_IOPORT_1;
+    sXspiManagerCfg.Req2AckTime = 1;
+
+    if (HAL_XSPIM_Config(&hxspi1,
+                         &sXspiManagerCfg,
+                         HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+        Error_Handler();
+    }
 }
 
 static void MX_XSPI2_Init(void)
