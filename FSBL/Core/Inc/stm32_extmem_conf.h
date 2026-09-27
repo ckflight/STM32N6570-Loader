@@ -44,8 +44,6 @@ extern EXTMEM_DefinitionTypeDef extmem_list_config[1];
 EXTMEM_DefinitionTypeDef extmem_list_config[1];
 #endif
 
-
-
 #ifdef __cplusplus
 }
 #endif
