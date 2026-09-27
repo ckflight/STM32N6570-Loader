@@ -1,34 +1,5 @@
-/**
-  ******************************************************************************
-  * @file    stm32_boot_lrun.c
-  * @author  MCD Application Team
-  * @brief   This file manages booting in load and run mode.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2022 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
 
-/* Includes ------------------------------------------------------------------*/
 #include "stm32_boot_lrun.h"
-
-/** @defgroup BOOT
-  * @{
-  */
-
-/** @defgroup BOOT_LRUN
-  * @{
-  */
-
-/* Private typedefs ----------------------------------------------------------*/
-/* Private defines -----------------------------------------------------------*/
 
 /* offset of the vector table from the start of the image. Should be set in extmem_conf.h if needed  */
 #ifndef EXTMEM_HEADER_OFFSET
@@ -40,28 +11,18 @@
 #error "ExtMem user configuration incorrect : undefined parameters for Non-Secure image loading"
 #endif /* EXTMEM_LRUN_TS_ENABLE_NS) && (!EXTMEM_LRUN_DESTINATION_ADDRESS_NS || !EXTMEM_LRUN_SOURCE_ADDRESS_NS) */
 
-/* Private macros ------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
 BOOTStatus_TypeDef MapMemory(void);
 BOOTStatus_TypeDef CopyApplication(void);
 BOOTStatus_TypeDef JumpToApplication(void);
 BOOTStatus_TypeDef GetBaseAddress(uint32_t MemIndex, uint32_t *BaseAddress);
 
-/**
-  *  @addtogroup BOOT_LRUN_Exported_Functions Boot LRUN exported functions
-  * @{
-  */
 
-/**
-  * @brief Boots the application by mapping memories, loading code, and jumping to the application.
-  * @retval BOOTStatus_TypeDef Status of the operation.
-  */
+
 BOOTStatus_TypeDef BOOT_Application(void)
 {
   BOOTStatus_TypeDef retr;
 
-  /* Mount the memory */
+  // Mount the memory
   retr = MapMemory();
   if (BOOT_OK == retr)
   {
@@ -80,19 +41,6 @@ BOOTStatus_TypeDef BOOT_Application(void)
   return retr;
 }
 
-/**
-  * @}
-  */
-
-/**
-  *  @defgroup BOOT_LRUN_Private_Functions Boot LRUN private functions
-  * @{
-  */
-
-/**
-  * @brief  Maps the external memory.
-  * @retval BOOTStatus_TypeDef Status of the operation.
-  */
 BOOTStatus_TypeDef MapMemory(void)
 {
   BOOTStatus_TypeDef retr = BOOT_OK;
@@ -126,10 +74,6 @@ BOOTStatus_TypeDef MapMemory(void)
   return retr;
 }
 
-/**
-  * @brief  Copies the application data from source to destination.
-  * @retval BOOTStatus_TypeDef Status of the operation.
-  */
 BOOTStatus_TypeDef CopyApplication(void)
 {
   BOOTStatus_TypeDef retr = BOOT_OK;
@@ -205,10 +149,6 @@ BOOTStatus_TypeDef CopyApplication(void)
   return retr;
 }
 
-/**
-  * @brief  Jumps to the application using its vector table.
-  * @retval BOOTStatus_TypeDef Status of the operation.
-  */
 BOOTStatus_TypeDef JumpToApplication(void)
 {
   uint32_t primask_bit;
@@ -263,22 +203,12 @@ BOOTStatus_TypeDef JumpToApplication(void)
   return BOOT_OK;
 }
 
-
-/**
-  * @brief Gets the size of the application image.
-  * @param img_addr Address of the application image.
-  * @retval Size of the application image in bytes.
-  */
 __weak uint32_t BOOT_GetApplicationSize(uint32_t img_addr)
 {
   UNUSED(img_addr);
   return EXTMEM_LRUN_SOURCE_SIZE;
 }
 
-/**
-  * @brief Gets the address of the application's vector table.
-  * @retval Address of the vector table.
-  */
 __weak uint32_t BOOT_GetApplicationVectorTable(void)
 {
   uint32_t vector_table;
@@ -294,14 +224,4 @@ __weak uint32_t BOOT_GetApplicationVectorTable(void)
   vector_table += EXTMEM_HEADER_OFFSET;
   return vector_table;
 }
-/**
-  * @}
-  */
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
