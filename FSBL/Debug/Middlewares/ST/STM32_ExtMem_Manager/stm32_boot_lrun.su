@@ -1,0 +1,6 @@
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:60:20:BOOT_Application	16	static
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:96:20:MapMemory	16	static
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:133:20:CopyApplication	32	static
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:212:20:JumpToApplication	80	static,ignoring_inline_asm
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:272:17:BOOT_GetApplicationSize	16	static
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c:282:17:BOOT_GetApplicationVectorTable	16	static

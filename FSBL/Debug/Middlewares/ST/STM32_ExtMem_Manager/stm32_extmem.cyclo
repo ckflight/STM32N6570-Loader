@@ -1,0 +1,10 @@
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:133:22:EXTMEM_Init	4
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:245:22:EXTMEM_DeInit	3
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:338:22:EXTMEM_Read	4
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:435:22:EXTMEM_Write	4
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:538:22:EXTMEM_WriteInMappedMode	4
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:615:22:EXTMEM_EraseSector	19
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:780:22:EXTMEM_EraseAll	4
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:870:22:EXTMEM_GetInfo	3
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:952:22:EXTMEM_MemoryMappedMode	6
+/home/ck/Desktop/Workspace/STM32CubeIDE Workspace/STM32N6570_Loader/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c:1093:22:EXTMEM_GetMapAddress	7
