@@ -5,6 +5,7 @@
 XSPI_HandleTypeDef hxspi1;
 XSPI_HandleTypeDef hxspi2;
 
+void SystemClock_Config2(void);
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 
@@ -28,27 +29,38 @@ static void MX_XSPI2_Init(void);
  * Signing:
  *   STM32_SigningTool_CLI -bin "${ProjName}.bin" -nk -of 0x80000000 -t fsbl -o "${ProjName}-Trusted.bin" -hv 2.3 -align
  */
+volatile uint32_t clock_freq = 0;
 
 int main(void)
 {
+	// These lines enable attaching debugger to app in flash boot.
+	// Power on the circuit then run the STM32N6570-ThreadX-USB-CDC-AI-Face-Detection-Ethernet-FSBL Attach debugger
+	__HAL_RCC_BSEC_CLK_ENABLE();
+	BSEC->AP_UNLOCK = 0xB4;
+	BSEC->DBGCR     = 0xB451B400;
 
-  HAL_Init();
+	HAL_Init();
 
-  SystemClock_Config();
+	SystemClock_Config();
 
-  PeriphCommonClock_Config();
+	clock_freq = HAL_RCC_GetCpuClockFreq();
+	clock_freq = HAL_RCC_GetHCLKFreq();
+	clock_freq = HAL_RCC_GetPCLK1Freq();
+	clock_freq = HAL_RCC_GetPCLK2Freq();
 
-  //MX_XSPI1_Init();
-  MX_XSPI2_Init();
-  MX_EXTMEM_MANAGER_Init();
+	PeriphCommonClock_Config();
 
-  if (BOOT_OK != BOOT_Application())
-  {
-    Error_Handler();
-  }
+	MX_XSPI2_Init();
 
-  // The code does not enter here since it jumps to the application memory location
-  while (1){}
+	MX_EXTMEM_MANAGER_Init();
+
+	if (BOOT_OK != BOOT_Application())
+	{
+	Error_Handler();
+	}
+
+	// The code does not enter here since it jumps to the application memory location
+	while (1){}
 
 }
 
@@ -278,22 +290,22 @@ static void MX_XSPI2_Init(void)
   XSPIM_CfgTypeDef sXspiManagerCfg = {0};
 
   /* XSPI2 parameter configuration*/
-  hxspi2.Instance = XSPI2;
-  hxspi2.Init.FifoThresholdByte = 4;
-  hxspi2.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hxspi2.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
-  hxspi2.Init.MemorySize = HAL_XSPI_SIZE_1GB;
-  hxspi2.Init.ChipSelectHighTimeCycle = 1;
-  hxspi2.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
-  hxspi2.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hxspi2.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
-  hxspi2.Init.ClockPrescaler = 0;
-  hxspi2.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_DISABLE;
-  hxspi2.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
-  hxspi2.Init.MaxTran = 0;
-  hxspi2.Init.Refresh = 0;
-  hxspi2.Init.MemorySelect = HAL_XSPI_CSSEL_NCS1;
+  hxspi2.Instance 						= XSPI2;
+  hxspi2.Init.FifoThresholdByte 		= 4;
+  hxspi2.Init.MemoryMode 				= HAL_XSPI_SINGLE_MEM;
+  hxspi2.Init.MemoryType 				= HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi2.Init.MemorySize 				= HAL_XSPI_SIZE_1GB;
+  hxspi2.Init.ChipSelectHighTimeCycle 	= 1;
+  hxspi2.Init.FreeRunningClock 			= HAL_XSPI_FREERUNCLK_DISABLE;
+  hxspi2.Init.ClockMode 				= HAL_XSPI_CLOCK_MODE_0;
+  hxspi2.Init.WrapSize 					= HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi2.Init.ClockPrescaler 			= 0;
+  hxspi2.Init.SampleShifting 			= HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi2.Init.DelayHoldQuarterCycle		= HAL_XSPI_DHQC_DISABLE;
+  hxspi2.Init.ChipSelectBoundary 		= HAL_XSPI_BONDARYOF_NONE;
+  hxspi2.Init.MaxTran 					= 0;
+  hxspi2.Init.Refresh 					= 0;
+  hxspi2.Init.MemorySelect 				= HAL_XSPI_CSSEL_NCS1;
   if (HAL_XSPI_Init(&hxspi2) != HAL_OK)
   {
     Error_Handler();
