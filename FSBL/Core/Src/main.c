@@ -12,6 +12,8 @@ void PeriphCommonClock_Config(void);
 static void MX_XSPI1_Init(void);
 static void MX_XSPI2_Init(void);
 
+
+
 /*
  * STM32N6570-DK FSBL - Load and Run
  *
